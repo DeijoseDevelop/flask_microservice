@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: flask_app
+    container_name: flask_microservice
+    restart: always
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+    environment:
+      FLASK_DEBUG: 'True'
+  redis:
+    image: redis
+    container_name: redis_microservice
+    restart: always
+  celery:
+    restart: always
+    image: flask_app
+    container_name: celery_microservice
+    command: sh -c "cd ./modular/flask_app/ && celery -A my_apps.celery worker -l INFO"
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+      - web
