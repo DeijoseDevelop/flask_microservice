@@ -6,10 +6,10 @@ from flask_jwt_extended import jwt_required
 import json
 
 
-login = Blueprint('login', __name__)
+login_app = Blueprint('login', __name__)
 
 
-@login.route('/login/', methods=['POST'])
+@login_app.route('/login/', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def login_endpoint():
     data = request.json
@@ -36,7 +36,7 @@ def login_endpoint():
     return Response(json.dumps({"message": 'Login successful', "token": access_token, "data": user}), mimetype='application/json', status=200)
 
 
-@login.route('/logout/', methods=['POST'])
+@login_app.route('/logout/', methods=['POST'])
 @jwt_required()
 @cross_origin(supports_credentials=True)
 def logout():

@@ -4,12 +4,12 @@ import os
 import json
 
 
-general = Blueprint('general', __name__)
+general_app = Blueprint('general', __name__)
 
 
-@general.route('/general/', methods=['GET'])
+@general_app.route('/general/', methods=['GET'])
 # @cross_origin(supports_credentials=True)
-def video():
+def general():
     data = {
         "message": 'Hello world!!!'
     }
