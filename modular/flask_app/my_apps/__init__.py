@@ -19,10 +19,8 @@ login_manager.login_view = "login.login"
 # apps
 from my_apps.general.views import general_app
 from my_apps.authenticate.views import authenticate_app
-from my_apps.validate_email.views import validate_email_app
 
 
 # we record the views
 app.register_blueprint(general_app)
 app.register_blueprint(authenticate_app)
-app.register_blueprint(validate_email_app)
