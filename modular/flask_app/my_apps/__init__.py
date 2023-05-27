@@ -11,12 +11,12 @@ app = Flask(__name__)
 template = {
     "swagger": "2.0",
     "info": {
-        "title": "Validate Email Microservice",
-        "description": "API for validate email",
+        "title": "My microservice",
+        "description": "Microservice created by me",
         "contact": {
-            "responsibleOrganization": "Deiver Vazquez",
-            "responsibleDeveloper": "Deiver Vazquez",
-            "email": "dvazquez@lsv-tech.com",
+            "responsibleOrganization": "Unknown",
+            "responsibleDeveloper": "Unknown",
+            "email": "Unknown@gmail.com",
         },
         "version": "0.1.0"
     },

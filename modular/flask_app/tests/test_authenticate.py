@@ -17,28 +17,30 @@ class AuthenticateTest(BaseTest):
         }
         super(AuthenticateTest, self).setUp()
 
-    def test_not_x_api_key_in_authentication(self):
-        self.headers.pop('x-api-key')
-        response = self.client.post(
+    def test_method_http_invalid(self):
+        response = self.client.get(
             f'{self.TEST_URL}/api/v1/authenticate/',
-            data=self.to_json(self.valid_user),
+            data=self.to_json(self.fake_user),
             headers=self.headers,
         )
 
-        self.assertEqual(
-            response.json()['message'], "X-API-KEY header is required")
-        self.assertEqual(response.status_code, 401)
+        print(response.reason)
+        self.assertEqual(response.reason, "METHOD NOT ALLOWED")
+        self.assertEqual(response.status_code, 405)
+
+    def test_not_x_api_key_in_authentication(self):
+        self.headers.pop('x-api-key')
+        response, status_code = self.login_test()
+
+        self.assertEqual(response['message'], "X-API-KEY header is required")
+        self.assertEqual(status_code, 401)
 
     def test_x_api_key_invalid(self):
         self.headers['x-api-key'] = "lorem ipsum"
-        response = self.client.post(
-            f'{self.TEST_URL}/api/v1/authenticate/',
-            data=self.to_json(self.valid_user),
-            headers=self.headers,
-        )
+        response, status_code = self.login_test()
 
-        self.assertEqual(response.json()['message'], "X-API-KEY invalid",)
-        self.assertEqual(response.status_code, 401)
+        self.assertEqual(response['message'], "X-API-KEY invalid",)
+        self.assertEqual(status_code, 401)
 
     def test_authenticate_email_invalid(self):
         response = self.client.post(
