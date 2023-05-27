@@ -1,7 +1,10 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class User(object):
-    def __init__(self, email: str, password: str):
-        self._email = email
-        self._password = password
+    _email: str
+    _password: str
 
     def get_email(self):
         return self._email
