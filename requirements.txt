@@ -7,6 +7,9 @@ importlib-metadata==4.13.0
 python-dotenv==1.0.0
 setuptools
 
+# database
+SQLAlchemy==2.0.15
+
 # docs
 flasgger==0.9.5
 marshmallow==3.19.0
