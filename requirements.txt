@@ -8,7 +8,9 @@ python-dotenv==1.0.0
 setuptools
 
 # database
+Flask-SQLAlchemy==3.0.3
 SQLAlchemy==2.0.15
+postgres==4.0
 
 # docs
 flasgger==0.9.5
