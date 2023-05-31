@@ -14,6 +14,7 @@ from my_apps.users.models import (
 from my_apps import (
     APIView,
     db,
+    pagination,
 )
 
 
@@ -40,9 +41,34 @@ class ListUserView(APIView):
             "schema": {
                 "type": "object",
                 "properties": {
-                    "count": {
-                        "type": "integer",
-                        "description": "Count of users",
+                    "pagination": {
+                        "type": "object",
+                        "properties": {
+                            "current": {
+                                "type": "string",
+                                "description": "Current page"
+                            },
+                            "next": {
+                                "type": "string",
+                                "description": "List for next page"
+                            },
+                            "pages": {
+                                "type": "integer",
+                                "description": "Cant of pages"
+                            },
+                            "per_page": {
+                                "type": "integer",
+                                "description": "Cant of records total per page"
+                            },
+                            "prev": {
+                                "type": "string",
+                                "description": "List for previous page"
+                            },
+                            "total": {
+                                "type": "integer",
+                                "description": "Total records"
+                            },
+                        },
                     },
                     "results": {
                         "type": "array",
@@ -74,5 +100,14 @@ class ListUserView(APIView):
     @cross_origin(supports_credentials=True)
     def get(self):
         serialized_users = [user.as_dict() for user in User.query.order_by(User.id.asc()).all()]
-        return customResponse({"count": len(serialized_users), "results": serialized_users}, status=200)
+
+        return pagination.paginate(User, user_fields,  pagination_schema_hook=lambda current_page, page_obj: {
+            "next": page_obj.has_next,
+            "prev": page_obj.has_prev,
+            "current": current_page,
+            "pages": page_obj.pages,
+            "per_page": page_obj.per_page,
+            "total": page_obj.total,
+        })
+        # return customResponse({"count": len(serialized_users), "results": serialized_users}, status=200)
 
