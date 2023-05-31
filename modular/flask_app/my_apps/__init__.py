@@ -1,22 +1,32 @@
+import os
+
 from flask import Flask
 from flasgger import Swagger
 from celery import Celery
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from dotenv import load_dotenv
 
-import os
+from my_apps.utils.interfaces import *
 
+
+load_dotenv()
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{os.getenv('POSTGRES_USER')}:{os.getenv('POSTGRES_PASSWORD')}@db:5432/{os.getenv('POSTGRES_DB')}"
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 # Swagger config
 template = {
     "swagger": "2.0",
     "info": {
-        "title": "My microservice",
+        "title": "Users management microservice",
         "description": "Microservice created by me",
         "contact": {
-            "responsibleOrganization": "Unknown",
-            "responsibleDeveloper": "Unknown",
-            "email": "Unknown@gmail.com",
+            "responsibleOrganization": "LSV",
+            "responsibleDeveloper": "LSV Developer",
+            "email": "lsvdeveloper@lsv-tech.com",
         },
         "version": "0.1.0"
     },
@@ -32,8 +42,8 @@ celery = Celery(app.name, broker=app.config["CELERY_BROKER_URL"])
 celery.conf.update(app.config)
 
 # apps
-from my_apps.authenticate.views import authenticate_app
+from my_apps.users.views import users_app
 
 
 # we record the views
-app.register_blueprint(authenticate_app)
+app.register_blueprint(users_app)

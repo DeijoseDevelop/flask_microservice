@@ -7,9 +7,18 @@ importlib-metadata==4.13.0
 python-dotenv==1.0.0
 setuptools
 
+# encrypt password
+passlib==1.7.4
+
+# RESTfull
+Flask-RESTful==0.3.10
+flask-rest-paginate==1.1.3
+
 # database
 Flask-SQLAlchemy==3.0.3
+Flask-Migrate==4.0.4
 SQLAlchemy==2.0.15
+psycopg2==2.9.6
 postgres==4.0
 
 # docs

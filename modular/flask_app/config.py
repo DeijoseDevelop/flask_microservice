@@ -26,13 +26,6 @@ jwt = JWTManager(app)
 
 app.config['TIMEZONE'] = 'America/Bogota'
 
-
-# user for authentication
-app.config['user'] = {
-    "email": os.getenv("AUTH_EMAIL"),
-    "password": os.getenv("AUTH_PASSWORD"),
-}
-
 app.config['X-API-KEY'] = os.getenv("X_API_KEY")
 
 class BaseConfig(object):

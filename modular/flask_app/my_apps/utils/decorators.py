@@ -1,13 +1,33 @@
-from flask import request, Response, current_app
-
-import os
 import json
+import os
 
+from flask import request, Response, current_app
+from sqlalchemy.exc import (
+    IntegrityError,
+    NoResultFound,
+)
 from dotenv import load_dotenv
 
 
 load_dotenv()
 
+def user_not_exist(method):
+    def wrapper(*args, **kwargs):
+        try:
+            return method(*args, **kwargs)
+        except NoResultFound as error:
+            return Response(json.dumps({"message": "User does not exist"}), mimetype='application/json', status=500)
+
+    return wrapper
+
+def check_unique_email(method):
+    def wrapper(*args, **kwargs):
+        try:
+            return method(*args, **kwargs)
+        except IntegrityError as error:
+            return Response(json.dumps({"message": "The email address is already registered"}), mimetype='application/json', status=500)
+
+    return wrapper
 
 def x_api_key_required(method):
     def wrapper(*args, **kwargs):

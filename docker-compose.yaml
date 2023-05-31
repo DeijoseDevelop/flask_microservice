@@ -1,6 +1,7 @@
 version: "3.9"
 
 services:
+
   web:
     build:
       context: .
@@ -14,10 +15,36 @@ services:
       - .:/code
     environment:
       FLASK_DEBUG: 'True'
+
+  db:
+    container_name: flask_postgres
+    image: postgres
+    restart: always
+    volumes:
+      - .:/code
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+
+  pgadmin:
+    restart: always
+    container_name: flask_pgadmin
+    image: 'dpage/pgadmin4'
+    volumes:
+      - .:/code
+    env_file:
+      - .env
+    ports:
+      - 5050:80
+    depends_on:
+      - db
+
   redis:
     image: redis
     container_name: redis_microservice
     restart: always
+
   celery:
     restart: always
     image: flask_app

@@ -1,0 +1,1 @@
+from my_apps.users.models.user import User, user_fields
