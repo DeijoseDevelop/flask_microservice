@@ -73,14 +73,14 @@ class CreateUserView(APIView):
         },
     ]
     responses = {
-        200: {
+        201: {
             "description": "User created",
             "schema": {
                 "type": "object",
                 "properties": {
                     "message": {
                         "type": "string",
-                        "description": "user created succesfully",
+                        "description": "User created succesful",
                     }
                 }
             }
@@ -92,7 +92,7 @@ class CreateUserView(APIView):
                 "properties": {
                     "message": {
                         "type": "string",
-                        "description": "fields are required: name, email and password",
+                        "description": "Fields are required: name, email and password",
                     }
                 }
             }
@@ -107,7 +107,7 @@ class CreateUserView(APIView):
         data = request.json
 
         if not data.get('name', False) or not data.get('email', False) or not data.get('password', False):
-            return customResponse({"message": 'fields are required: name, email or password'}, status=404)
+            return customResponse({"message": 'Fields are required: name, email or password'}, status=404)
 
         user = User(
             name=data['name'],
@@ -118,7 +118,7 @@ class CreateUserView(APIView):
         self._create_table()
         self._insert_user(user)
 
-        return customResponse({"message": 'user created succesful'}, status=201)
+        return customResponse({"message": 'User created succesful'}, status=201)
 
     def _create_table(self):
         with app.app_context():

@@ -2,6 +2,9 @@ from flask_restful import fields
 from my_apps import db, app
 
 
+with app.app_context():
+    db.create_all()
+
 user_fields = {
     "id": fields.Integer,
     "name": fields.String,
@@ -22,7 +25,7 @@ class User(db.Model):
         self.email = email
         self.password = password
 
-    def as_dict(self):
+    def to_dict(self):
         return {
             'id': self.id,
             'name': self.name,

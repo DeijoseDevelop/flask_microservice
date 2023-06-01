@@ -77,7 +77,7 @@ class UpdateUserView(APIView):
 
         data = request.json
         if not data.get('name', False) and not data.get('email', False) and not data.get('password', False):
-            return customResponse({"message": 'fields are required: name, email or password'}, status=404)
+            return customResponse({"message": 'Fields are required: name, email or password'}, status=404)
 
         user = self._get_user(user_id)
         if user is None:

@@ -99,8 +99,6 @@ class ListUserView(APIView):
     @x_api_key_required
     @cross_origin(supports_credentials=True)
     def get(self):
-        serialized_users = [user.as_dict() for user in User.query.order_by(User.id.asc()).all()]
-
         return pagination.paginate(User, user_fields,  pagination_schema_hook=lambda current_page, page_obj: {
             "next": page_obj.has_next,
             "prev": page_obj.has_prev,
@@ -109,5 +107,7 @@ class ListUserView(APIView):
             "per_page": page_obj.per_page,
             "total": page_obj.total,
         })
+
+        # serialized_users = [user.as_dict() for user in User.query.order_by(User.id.asc()).all()]
         # return customResponse({"count": len(serialized_users), "results": serialized_users}, status=200)
 

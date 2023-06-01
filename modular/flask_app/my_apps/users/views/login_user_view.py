@@ -92,9 +92,13 @@ class LoginUserView(APIView):
 
         query = self._get_user(email)
 
+        current_app.logger.debug(data)
+        current_app.logger.debug(query)
+        current_app.logger.debug(User.query.all())
+        current_app.logger.debug(User.query.filter_by(email=email).first())
+
         if len(query) == 0:
             return customResponse({"message": 'User does not exist'}, status=404)
-
         user = query[0][0]
 
         if not bcrypt.verify(password, user.password):
