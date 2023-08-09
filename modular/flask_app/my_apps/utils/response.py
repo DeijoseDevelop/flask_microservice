@@ -1,8 +1,15 @@
 import json
+
 from flask import Response
 
 
-def customResponse(data: dict, status: int):
+class CustomResponse(Response):
+    def __init__(self, response=None, status=None, headers=None, mimetype=None):
+        if isinstance(response, (dict, list)):
+            response = json.dumps(response)
 
-    return Response(json.dumps(data), mimetype='application/json', status=status)
+        if mimetype is None:
+            mimetype = "application/json"
+
+        super().__init__(response, status, headers, mimetype)
 
