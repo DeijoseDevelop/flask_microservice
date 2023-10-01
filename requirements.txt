@@ -1,4 +1,4 @@
-flask==2.2
+flask==3.0.0
 Flask-Cors==3.0.10
 flask-jwt-extended==4.4.4
 celery==5.2.5
