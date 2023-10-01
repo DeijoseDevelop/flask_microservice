@@ -1,23 +1,23 @@
-flask==3.0.0
-Flask-Cors==3.0.10
-flask-jwt-extended==4.4.4
+flask==2.3.3
+Flask-Cors==4.0.0
+flask-jwt-extended==4.5.2
 celery==5.2.5
 redis==4.5.1
-importlib-metadata==4.13.0
+importlib-metadata==6.8.0
 python-dotenv==1.0.0
 setuptools
 
 # database
-Flask-SQLAlchemy==3.0.3
-SQLAlchemy==2.0.15
+Flask-SQLAlchemy==3.1.1
+SQLAlchemy==2.0.21
 postgres==4.0
 
 # docs
-flasgger==0.9.5
-marshmallow==3.19.0
+flasgger==0.9.7.1
+marshmallow==3.20.1
 apispec==6.3.0
 
 # tests
-coverage==7.2.5
+coverage==7.3.1
 requests==2.31.0
-locust==2.15.1
+locust==2.16.1
